@@ -1,7 +1,7 @@
 function idx = get_scatter_simplify(grid, axis, marker, n_split, pts)
 % Simplify scatter points by removing overlapping points.
 %
-%    Scatter plots with millions of points are slow and ressource intensive.
+%    Scatter plots with millions of points are slow and resource intensive.
 %    However, most of the points are not visible since they are hidden by other points.
 %    This code detects which points are hidden and remove them.
 %
@@ -12,13 +12,16 @@ function idx = get_scatter_simplify(grid, axis, marker, n_split, pts)
 %        - the points that do not appear in the pixel matrix will be invisible in the plot
 %        - the invisible points are removed
 %
+%    In other words, this algorithm work as a virtual graphic buffer.
+%    The plot is precompute and invisible elements are deleted.
+%
 %    This algorithm (o(1) complexity) features several advantages:
 %        - no need to compute the distance between all the points
 %        - the memory requirement is linearly proportional to the number of pixels
 %        - the memory requirement is linearly proportional to the number of scatter points
 %        - computational cost is linearly proportional to the number of scatter points 
 %
-%    This code has been succesfully tested with large datasets:
+%    This code has been successfully tested with large datasets:
 %        - this algorithm is vectorized and many points are treated together.
 %        - the number of points (chunk size) processed in a step can be selected.
 %        - 100'000'000 points can be simplified in several minutes

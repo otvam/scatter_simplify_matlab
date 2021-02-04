@@ -1,6 +1,6 @@
 # MATLAB Code for Simplifying Scatter Plots
 
-**MATLAB scatter plots** with **millions of points** are slow and ressource intensive.
+**MATLAB scatter plots** with **millions of points** are slow and resource intensive.
 However, most of the points are not visible since they are hidden by other points.
 This code detects which points are **hidden** and **remove** them.
 
@@ -11,13 +11,16 @@ The used **algorithm** is particularly **efficient** and can handle millions of 
 * the points that do not appear in the pixel matrix will be invisible in the plot
 * the invisible points are removed
 
+In other words, this algorithm work as a virtual graphic buffer.
+The plot is precompute and invisible elements are deleted.
+
 This algorithm (o(1) complexity) features several advantages:
     - No need to compute the distance between all the points
     - The memory requirement is linearly proportional to the number of pixels
     - The memory requirement is linearly proportional to the number of scatter points
     - Computational cost is linearly proportional to the number of scatter points 
 
-This code has been succesfully tested with **large datasets**:
+This code has been successfully tested with **large datasets**:
 * this algorithm is vectorized and many points are treated together.
 * the number of points (chunk size) processed in a step can be selected.
 * 100'000'000 points can be simplified in several minutes
@@ -25,7 +28,7 @@ This code has been succesfully tested with **large datasets**:
 ## Example
 
 Look at the examples [run_example.m](run_example.m).
-A dataset with random points is succesfully simplifiy (by a factor of 50) without changing the scatter plot result.
+A dataset with random points is successfully simplified (by a factor of 50) without changing the scatter plot result.
 
 <p float="middle">
     <img src="readme_img/complete_dataset.png" width="400">
