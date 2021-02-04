@@ -15,10 +15,10 @@ In other words, this algorithm work as a virtual graphic buffer.
 The plot is precompute and invisible elements are deleted.
 
 This algorithm (o(1) complexity) features several advantages:
-    - No need to compute the distance between all the points
-    - The memory requirement is linearly proportional to the number of pixels
-    - The memory requirement is linearly proportional to the number of scatter points
-    - Computational cost is linearly proportional to the number of scatter points 
+* no need to compute the distance between all the points
+* the memory requirement is linearly proportional to the number of pixels
+* the memory requirement is linearly proportional to the number of scatter points
+* computational cost is linearly proportional to the number of scatter points 
 
 This code has been successfully tested with **large datasets**:
 * this algorithm is vectorized and many points are treated together.
