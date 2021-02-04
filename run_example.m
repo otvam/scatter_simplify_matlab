@@ -11,16 +11,16 @@ function run_example()
 close('all');
 
 %% parameters
-grid.n_x = 800; % number of pixels in x direction
-grid.n_y = 700; % number of pixels in y direction
+simplify.n_x = 800; % number of pixels in x direction
+simplify.n_y = 700; % number of pixels in y direction
+simplify.marker = 4.5; % radius of the scatter points in pixels
+
+n_split = 100e3; % number of points being computed in a vectorized way
 
 axis.x_min = 15; % minimum x axis value
 axis.x_max = 105; % maximum x axis value
 axis.y_min = 5; % minimum y axis value
 axis.y_max = 55; % maximum y axis value
-
-marker = 4.5; % radius of the scatter points in pixels
-n_split = 100e3; % number of points being computed in a vectorized way
 
 %% dataset
 n_pts = 1e6; % number of points
@@ -29,7 +29,7 @@ y_pts = 10+(50-10).*rand(1, n_pts); % random points (y coordinate)
 c_pts = rand(1, n_pts); % random color
 
 %% compute the indices of the point to be kept
-idx_dec = get_scatter_simplify(grid, axis, marker, n_split, [x_pts ; y_pts]);
+idx_dec = get_scatter_simplify(simplify, n_split, axis, [x_pts ; y_pts]);
 
 %% disp
 fprintf('n_all = %d\n', n_pts)
