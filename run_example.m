@@ -14,12 +14,12 @@ close('all');
 grid.n_x = 800; % number of pixels in x direction
 grid.n_y = 700; % number of pixels in y direction
 
-axis.x_min = 20; % minimum x axis value
-axis.x_max = 100; % maximum x axis value
-axis.y_min = 10; % minimum y axis value
-axis.y_max = 50; % maximum y axis value
+axis.x_min = 15; % minimum x axis value
+axis.x_max = 105; % maximum x axis value
+axis.y_min = 5; % minimum y axis value
+axis.y_max = 55; % maximum y axis value
 
-marker = 5; % radius of the scatter points in pixels
+marker = 4.5; % radius of the scatter points in pixels
 n_split = 100e3; % number of points being computed in a vectorized way
 
 %% dataset
@@ -35,6 +35,7 @@ idx_dec = get_scatter_simplify(grid, axis, marker, n_split, [x_pts ; y_pts]);
 fprintf('n_all = %d\n', n_pts)
 fprintf('n_simplify = %d\n', nnz(idx_dec))
 fprintf('fraction = %.3f %%\n', 1e2.*nnz(idx_dec)./n_pts)
+fprintf('factor = %.3f x\n', n_pts./nnz(idx_dec))
 
 %% plot
 get_plot('Complete Dataset', x_pts, y_pts, c_pts, 1:n_pts)

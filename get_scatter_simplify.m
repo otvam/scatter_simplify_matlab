@@ -6,22 +6,22 @@ function idx = get_scatter_simplify(grid, axis, marker, n_split, pts)
 %    This code detects which points are hidden and remove them.
 %
 %    The used algorithm is particularly efficient and can handle millions of points:
-%        - A pixel matrix is generated
-%        - The points are circle occupying a given number of pixels
-%        - The indices of the points are placed (in order) in the pixel matrix
-%        - The points that do not appear in the pixel matrix will be invisible in the plot
-%        - The invisible points are removed
-%
-%    This algorithm is vectorized and many points are treated together.
-%    The number of points (chunk size) processed in a step can be selected.
+%        - a pixel matrix is generated
+%        - the points are circle occupying a given number of pixels
+%        - the indices of the points are placed (in order) in the pixel matrix
+%        - the points that do not appear in the pixel matrix will be invisible in the plot
+%        - the invisible points are removed
 %
 %    This algorithm (o(1) complexity) features several advantages:
-%        - No need to compute the distance between all the points
-%        - The memory requirement is linearly proportional to the number of pixels
-%        - The memory requirement is linearly proportional to the number of scatter points
-%        - Computational cost is linearly proportional to the number of scatter points 
+%        - no need to compute the distance between all the points
+%        - the memory requirement is linearly proportional to the number of pixels
+%        - the memory requirement is linearly proportional to the number of scatter points
+%        - computational cost is linearly proportional to the number of scatter points 
 %
-%    This code has been succesfully test with 100'000'000 points.
+%    This code has been succesfully tested with large datasets:
+%        - this algorithm is vectorized and many points are treated together.
+%        - the number of points (chunk size) processed in a step can be selected.
+%        - 100'000'000 points can be simplified in several minutes
 %
 %    Parameters:
 %        grid (struct): size of the pixel grid 
@@ -72,8 +72,8 @@ function mask = get_mask(marker)
 % Get the indices of circular mask representing the pixels occupied by a point.
 %
 %    Create a binary mask containing the pixels occupied by a scatter point:
-%        - The index (0,0) represents the center of the circle
-%        - The index (i,j) represents a pixel with a shift (in cartesian coordinates)
+%        - the index (0,0) represents the center of the circle
+%        - the index (i,j) represents a pixel with a shift (in cartesian coordinates)
 %
 %    Parameters:
 %        marker (float): radius of the mask in pixel
@@ -82,7 +82,8 @@ function mask = get_mask(marker)
 %        mask (matrix): matrix with the x/y indices of the mask
 
 % get indices matrix
-[x_idx, y_idx] = ndgrid(-marker:+marker, -marker:+marker);
+vec = -ceil(marker):1:+ceil(marker);
+[x_idx, y_idx] = ndgrid(vec, vec);
 
 % get the radius of the cells
 r_cell = hypot(x_idx, y_idx);
@@ -127,11 +128,11 @@ function mat = get_filter(mat, grid, axis, mask, pts, idx_select)
 % Split data into chunks with a fixed size.
 %
 %    Put the index of the scatter points into the pixel matrix:
-%        - Find all the pixels masked by the scatter points
-%        - Put the scatter point indices in the pixel matrix
-%        - The scatter points at the end of the provided matrix are on the top (hidding other points)
-%        - The scatter points at the beginning of the provided matrix are on the bottom (hidden by other points)
-%        - The code is fully vectorized, no loop across the scatter points
+%        - find all the pixels masked by the scatter points
+%        - put the scatter point indices in the pixel matrix
+%        - the scatter points at the end of the provided matrix are on the top (hidding other points)
+%        - the scatter points at the beginning of the provided matrix are on the bottom (hidden by other points)
+%        - the code is fully vectorized, no loop across the scatter points
 %
 %    Parameters:
 %        mat (matrix): matrix with the pixels and the scatter point indices
