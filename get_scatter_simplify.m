@@ -1,4 +1,4 @@
-function idx = get_scatter_simplify(simplify, n_split, axis, pts)
+function idx = get_scatter_simplify(simplify, x_lim, y_lim, pts)
 % Simplify scatter points by removing overlapping points.
 %
 %    Scatter plots with millions of points are slow and resource intensive.
@@ -31,12 +31,9 @@ function idx = get_scatter_simplify(simplify, n_split, axis, pts)
 %            simplify.n_x (int): number of pixels in x direction
 %            simplify.n_y (int): number of pixels in y direction
 %            simplify.marker (float): radius of the scatter points in pixels
-%        n_split (int): number of points being computed in a vectorized way
-%        axis (struct): axis limit of the scatter plot iin x and y directionn 
-%            axis.x_min (float): minimum x axis value
-%            axis.x_max (float): maximum x axis value
-%            axis.y_min (float): minimum y axis value
-%            axis.y_max (float): maximum y axis value
+%            simplify.n_split (int): number of points being computed in a vectorized way
+%        x_lim (vector): vector (2 elements) with the x axis limits
+%        y_lim (vector): vector (2 elements) with the y axis limits
 %        pts (vector): vector with the indices of the scatter points to be handled
 %            pts (first row): x coordinate of the points
 %            pts (second row): y coordinate of the points
@@ -49,14 +46,14 @@ function idx = get_scatter_simplify(simplify, n_split, axis, pts)
 %   2021 - BSD License.
 
 % get the mask with the circle pixel indices
-[mat, mask] = get_mask(simplify);
+[mat, mask, n_split] = get_mask(simplify);
 
 % split the scatter points into chunks
 [n_chunk, idx_chunk] = get_chunk(n_split, size(pts, 2));
 
 % for each chunk, assign the scatter point indices in the pixel matrix
 for i=1:n_chunk
-    mat = get_filter(mat, mask, axis, pts, idx_chunk{i});
+    mat = get_filter(mat, mask, x_lim, y_lim, pts, idx_chunk{i});
 end
 
 % extract the scatter point indices that appear in the pixel matrix
@@ -67,7 +64,7 @@ idx(isnan(idx)) = [];
 
 end
 
-function [mat, mask] = get_mask(simplify)
+function [mat, mask, n_split] = get_mask(simplify)
 % Get the indices of circular mask representing the pixels occupied by a point.
 %
 %    Create a binary mask containing the pixels occupied by a scatter point:
@@ -80,8 +77,11 @@ function [mat, mask] = get_mask(simplify)
 %    Returns:
 %        mat (matrix): matrix with the pixels (empty)
 %        mask (matrix): matrix with the x/y indices of the mask
+%        n_split (int): number of points being computed in a vectorized way
+
 
 % extract
+n_split = simplify.n_split;
 marker = simplify.marker;
 n_x = simplify.n_x;
 n_y = simplify.n_y;
@@ -132,7 +132,7 @@ n_chunk = length(idx_chunk);
 
 end
 
-function mat = get_filter(mat, mask, axis, pts, idx_select)
+function mat = get_filter(mat, mask, x_lim, y_lim, pts, idx_select)
 % Split data into chunks with a fixed size.
 %
 %    Put the index of the scatter points into the pixel matrix:
@@ -145,7 +145,8 @@ function mat = get_filter(mat, mask, axis, pts, idx_select)
 %    Parameters:
 %        mat (matrix): matrix with the pixels and the scatter point indices
 %        mask (matrix): matrix with the x/y indices of the mask 
-%        axis (struct): axis limit of the scatter plot iin x and y directionn 
+%        x_lim (vector): vector (2 elements) with the x axis limits
+%        y_lim (vector): vector (2 elements) with the y axis limits
 %        pts (matrix): matrix with the x/y coordinates of  the scatter points
 %        pts (vector): vector with the indices of the scatter points to be handled
 %
@@ -153,10 +154,10 @@ function mat = get_filter(mat, mask, axis, pts, idx_select)
 %        mat (matrix): updated matrix with the pixels and the scatter point indices
 
 % extract axis
-x_min = axis.x_min;
-x_max = axis.x_max;
-y_min = axis.y_min;
-y_max = axis.y_max;
+x_min = min(x_lim);
+x_max = max(x_lim);
+y_min = min(y_lim);
+y_max = max(y_lim);
 
 % extract pts
 x_pts = pts(1, idx_select);

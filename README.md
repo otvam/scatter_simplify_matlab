@@ -28,7 +28,7 @@ This code has been successfully tested with **large datasets**:
 ## Example
 
 Look at the examples [run_example.m](run_example.m).
-A dataset with random points is successfully simplified (by a factor of 50) without changing the scatter plot result.
+A dataset with random points is successfully simplified (by a factor of 40) without changing the scatter plot result.
 
 <p float="middle">
     <img src="readme_img/complete_dataset.png" width="400">
