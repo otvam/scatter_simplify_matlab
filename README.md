@@ -14,7 +14,7 @@ The used **algorithm** is particularly **efficient** and can handle millions of 
 In other words, this algorithm work as a virtual graphic buffer.
 The plot is precompute and invisible elements are deleted.
 
-This algorithm (o(1) complexity) features several advantages:
+This algorithm (o(n) complexity) features several advantages:
 * no need to compute the distance between all the points
 * the memory requirement is linearly proportional to the number of pixels
 * the memory requirement is linearly proportional to the number of scatter points
