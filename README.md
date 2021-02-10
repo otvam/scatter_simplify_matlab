@@ -12,7 +12,7 @@ The used **algorithm** is particularly **efficient** and can handle millions of 
 * the invisible points are removed
 
 In other words, this algorithm work as a virtual graphic buffer.
-The plot is precompute and invisible elements are deleted.
+The plot is precomputed and invisible elements are deleted.
 
 This algorithm (o(n) complexity) features several advantages:
 * no need to compute the distance between all the points
