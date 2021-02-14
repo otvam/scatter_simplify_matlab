@@ -1,7 +1,7 @@
 function run_example()
 % Simplify scatter points by removing overlapping points.
 %
-%   Create a dataset with 1'000'000 points (randomly points).
+%   Create a dataset with 1'000'000 points (random points).
 %   Simplify the dataset removing overlapping points.
 %   Plot both the original and simplified datasets.
 %
@@ -24,7 +24,7 @@ y_lim = [10 50]; % vector (2 elements) with the y axis limits
 n_pts = 1e6; % number of points
 x_pts = 20+(100-20).*rand(1, n_pts); % random points (x coordinate)
 y_pts = 10+(50-10).*rand(1, n_pts); % random points (y coordinate)
-c_pts = rand(1, n_pts); % random color
+c_pts = (x_pts>50).*x_pts+(y_pts>25).*y_pts; % color value
 
 %% compute the indices of the point to be kept
 idx_dec = get_scatter_simplify(simplify, x_lim, y_lim, [x_pts ; y_pts]);
@@ -56,8 +56,10 @@ scatter(x(idx).', y(idx).', 75, c(idx).', 'filled');
 colormap();
 xlim([20 100])
 ylim([10 50])
-caxis([0 1])
+caxis([0 150])
 grid('on')
-title(sprintf('%s / n = %d', name, nnz(idx)))
+colorbar()
+str = sprintf('n = %d', nnz(idx));
+text(60,45,{name, str},'Color','black','FontSize',14, 'FontWeight', 'bold')
 
 end
