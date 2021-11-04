@@ -42,8 +42,8 @@ function idx = get_scatter_simplify(simplify, x_lim, y_lim, pts)
 %    Returns:
 %        idx (vector): indices of the scatter points to be kept
 %
-%   Thomas Guillod.
-%   2021 - BSD License.
+%    Thomas Guillod.
+%    2021 - BSD License.
 
 % get the mask with the circle pixel indices
 [mat, mask, n_split] = get_mask(simplify);

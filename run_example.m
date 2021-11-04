@@ -1,12 +1,12 @@
 function run_example()
 % Simplify scatter points by removing overlapping points.
 %
-%   Create a dataset with 1'000'000 points (random points).
-%   Simplify the dataset removing overlapping points.
-%   Plot both the original and simplified datasets.
+%    Create a dataset with 1'000'000 points (random points).
+%    Simplify the dataset removing overlapping points.
+%    Plot both the original and simplified datasets.
 %
-%   Thomas Guillod.
-%   2021 - BSD License.
+%    Thomas Guillod.
+%    2021 - BSD License.
 
 close('all');
 
